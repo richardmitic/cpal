@@ -212,8 +212,6 @@ impl Device {
             _ => None,
         };
 
-        handle.start()?;
-
         let stream_inner = StreamInner {
             channel: handle,
             sample_format,
