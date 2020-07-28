@@ -193,6 +193,10 @@ impl Device {
         let (_buffer_len, period_len) = set_sw_params_from_format(&handle, conf)?;
 
         handle.prepare()?;
+        
+        // alsa needs a kick start to avoid underruns
+        let kick_start = vec![0u8; _buffer_len];
+        handle.io().writei(kick_start.as_slice())?;
 
         let num_descriptors = {
             let num_descriptors = handle.count();
